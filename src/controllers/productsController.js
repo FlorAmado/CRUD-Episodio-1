@@ -50,8 +50,8 @@ const controller = {
 	const newProduct = {
 		id: products[products.length -1 ].id +1,
 		name: name.trim(),
-		price: +price.trim(),
-		discount: +discount.trim(),
+		price: +price,
+		discount: +discount,
 		image: null,
 		description: description.trim(),
 		category: category,
@@ -59,20 +59,47 @@ const controller = {
 
 	products.push(newProduct);
 
-	fs.writeFileSync('./src/data/productsDataBase',JSON.stringify((products, null, 3),'utf-8'))
+	fs.writeFileSync(productsFilePath,JSON.stringify((products, null, 3),'utf-8'))
 
 		return res.redirect('/products');
 	},
 
 	// Update - Form to edit
 	edit: (req, res) => {
-		
-		return res.render('edit')
+		const { id } = req.params;
+    	const product = products.find(product => product.id === +id);
+		return res.render('product-edit-form',{
+			...product,
+		})
 	},
 	// Update - Method to update
 	update: (req, res) => {
+		const {id} = req.params;
 		
-		return res.render('update')
+		const product = products.find(product => product.id === +id);
+
+		const {name,price,discount,description,category}= req.body;
+
+		const productModified = {
+			id: +id,
+			name: name.trim(),
+			price: +price.trim(),
+			discount: +discount.trim(),
+			image: product.image,
+			description: description.trim(),
+			category: category,
+		}
+
+		const productsModified = products.map(product => {
+			if(product.id  === +id){
+				return productModified;
+			}
+			return product
+		})
+
+		fs.writeFileSync(productsFilePath, JSON.stringify(products, null, 3),'utf-8')
+
+		return res.redirect('products/detail/'+ id)
 	},
 
 	// Delete - Delete one product from DB

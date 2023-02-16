@@ -31,7 +31,8 @@ const controller = {
 		return res.render('results',{
 			productsFiltered,
 			toThousand,
-			keywords	
+			keywords,
+			precioFinal,
 		})
 	},
 };
