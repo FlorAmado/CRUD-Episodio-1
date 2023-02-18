@@ -48,7 +48,7 @@ const controller = {
 	// Create -  Method to store
 	store: (req, res) => {
 		const {name,price,discount,category,description} = req.body
-
+		
 		const newProduct = {
 			id : products[products.length - 1].id + 1,
 			name : name.trim(),
@@ -56,14 +56,14 @@ const controller = {
 			discount : +discount,
 			category : category,
 			description : description.trim(),
-			image: null
+			image: req.file ? req.file.filename : null,
 		}
-
+		
 		products.push(newProduct)
-
 		fs.writeFileSync(productsFilePath,JSON.stringify(products, null, 3), 'utf-8')
-
-		return res.redirect('/products')
+		
+		//return res.send(req.file)
+		return res.redirect('/products') 
 	},
 
 	// Update - Form to edit
@@ -87,7 +87,7 @@ const controller = {
 			discount: +discount,
 			category: category,
 			description: description.trim(),
-			image: product.image,
+			image: req.file ? req.file.filename : null, 
 		}
 
 		const productUpdate = products.map(product =>{

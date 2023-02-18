@@ -14,7 +14,7 @@
 			</div>
 		</div>
 		<div class="col-12">
-			<form action="/products/edit/<%= id %>?_method=PUT " method="POST">
+			<form action="/products/edit/<%= id %>?_method=PUT " method="POST" enctype="multipart/form-data">
 				<div class="row product-detail">
 					<div class="col-12 col-md-6">
 						<label for="name" class="form-label">Nombre del producto:</label>
@@ -36,6 +36,10 @@
 							<option value="visited" <%= category === 'in-sale' && 'selected' %>>Últimos agregados</option>
 						</select>
 					</div>
+					<div class="col-12 ">
+						<label for="image" class="form-label">Agregue una imagen</label>
+						<input type="file" id="image" class="form-control form-control-lg"  name="image">
+					  </div>
 					<div class="col-12">
 						<label for="description" class="form-label">Descipción:</label>
 						<textarea name="description" id="description" class="form-input"><%= description %></textarea>
@@ -53,5 +57,7 @@
 	<!-- footer -->
 	<%- include('partials/footer') %>
 	<!-- /footer -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+
 </body>	
 </html>
